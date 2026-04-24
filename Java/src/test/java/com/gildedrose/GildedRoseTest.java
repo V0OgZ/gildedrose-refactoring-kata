@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static com.gildedrose.ItemCatalog.DEXTERITY_VEST;
+import static com.gildedrose.TemporalEvolution.decreaseQuality;
+
 class GildedRoseTest {
 
     @Test
@@ -17,5 +19,19 @@ class GildedRoseTest {
         assertEquals(9, app.items[0].sellIn);
         assertEquals(19, app.items[0].quality);
     }
+
+
+// InventoryItem is the bridge between the legacy Item and its update behavior.
+@Test
+void inventoryItemAppliesAssociatedUpdate() {
+    InventoryItem inventoryItem = new InventoryItem(
+            new Item(DEXTERITY_VEST, 10, 20),
+            new TemporalEvolution(item -> decreaseQuality(item, 1))
+    );
+
+    inventoryItem.update();
+
+    assertEquals(19, inventoryItem.item.quality);
+}
 
 }
