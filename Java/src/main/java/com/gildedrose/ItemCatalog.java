@@ -3,6 +3,12 @@ package com.gildedrose;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gildedrose.TemporalEvolution.decreaseQuality;
+import static com.gildedrose.TemporalEvolution.increaseQuality;
+import static com.gildedrose.TemporalEvolution.decreaseSellIn;
+import static com.gildedrose.TemporalEvolution.isExpired;
+import static com.gildedrose.TemporalEvolution.resetQuality;
+
 // Small compromise: avoid duplicated magic strings without adding config or infrastructure.
 final class ItemCatalog {
     static final String AGED_BRIE = "Aged Brie";
@@ -64,7 +70,7 @@ final class ItemCatalog {
         decreaseSellIn(item);
 
         if (isExpired(item)) {
-            item.quality = 0;
+            resetQuality(item);
         }
     });
 
@@ -90,21 +96,5 @@ final class ItemCatalog {
         }
 
         return UPDATES.getOrDefault(item.name, REGULAR_UPDATE);
-    }
-
-    private static void decreaseQuality(Item item, int amount) {
-        TemporalEvolution.decreaseQuality(item, amount);
-    }
-
-    private static void increaseQuality(Item item, int amount) {
-        item.quality = Math.min(50, item.quality + amount);
-    }
-
-    private static void decreaseSellIn(Item item) {
-        item.sellIn = item.sellIn - 1;
-    }
-
-    private static boolean isExpired(Item item) {
-        return item.sellIn < 0;
     }
 }
