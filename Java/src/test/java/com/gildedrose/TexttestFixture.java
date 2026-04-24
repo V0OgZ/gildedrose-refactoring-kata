@@ -1,22 +1,27 @@
 package com.gildedrose;
 
 import static com.gildedrose.ItemCatalog.*;
+import static com.gildedrose.TemporalEvolution.decreaseQuality;
 
 public class TexttestFixture {
     public static void main(String[] args) {
         System.out.println("OMGHAI!");
 
-        Item[] items = new Item[] {
-                new Item(DEXTERITY_VEST, 10, 20), //
-                new Item(AGED_BRIE, 2, 0), //
-                new Item(ELIXIR_OF_THE_MONGOOSE, 5, 7), //
-                new Item(SULFURAS, 0, 80), //
-                new Item(SULFURAS, -1, 80),
-                new Item(BACKSTAGE_PASS, 15, 20),
-                new Item(BACKSTAGE_PASS, 10, 49),
-                new Item(BACKSTAGE_PASS, 5, 49),
+        InventoryItem[] inventoryItems = new InventoryItem[] {
+                inventoryItem(DEXTERITY_VEST, 10, 20,new TemporalEvolution(item -> decreaseQuality(item, 1))),
+                inventoryItem(AGED_BRIE, 2, 0,new TemporalEvolution(item -> { })),
+                inventoryItem(ELIXIR_OF_THE_MONGOOSE, 5, 7,new TemporalEvolution(item -> decreaseQuality(item, 1))),
+                inventoryItem(SULFURAS, 0, 80,new TemporalEvolution(item -> { })),
+                inventoryItem(SULFURAS, -1, 80, new TemporalEvolution(item -> { })),
+                inventoryItem(BACKSTAGE_PASS, 15, 20,new TemporalEvolution(item -> { })),
+                inventoryItem(BACKSTAGE_PASS, 10, 49,new TemporalEvolution(item -> { })),
+                inventoryItem(BACKSTAGE_PASS, 5, 49,new TemporalEvolution(item -> { })),
                 // this conjured item does not work properly yet
-                new Item(CONJURED_MANA_CAKE, 3, 6) };
+                inventoryItem(CONJURED_MANA_CAKE, 3, 6,
+                        new TemporalEvolution(item -> decreaseQuality(item, 2)))
+        };
+
+        Item[] items = itemsFrom(inventoryItems);
 
         GildedRose app = new GildedRose(items);
 
@@ -36,4 +41,17 @@ public class TexttestFixture {
         }
     }
 
+    private static InventoryItem inventoryItem(String name, int sellIn, int quality, ItemUpdate update) {
+        return new InventoryItem(new Item(name, sellIn, quality), update);
+    }
+
+    private static Item[] itemsFrom(InventoryItem[] inventoryItems) {
+        Item[] items = new Item[inventoryItems.length];
+
+        for (int i = 0; i < inventoryItems.length; i++) {
+            items[i] = inventoryItems[i].item;
+        }
+
+        return items;
+    }
 }
