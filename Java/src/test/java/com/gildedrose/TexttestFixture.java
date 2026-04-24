@@ -8,17 +8,17 @@ public class TexttestFixture {
         System.out.println("OMGHAI!");
 
         InventoryItem[] inventoryItems = new InventoryItem[] {
-                new InventoryItem(DEXTERITY_VEST, 10, 20, new TemporalEvolution(item -> decreaseQuality(item, 1))),
-                new InventoryItem(AGED_BRIE, 2, 0, new TemporalEvolution(item -> { })),
-                new InventoryItem(ELIXIR_OF_THE_MONGOOSE, 5, 7, new TemporalEvolution(item -> decreaseQuality(item, 1))),
-                new InventoryItem(SULFURAS, 0, 80, new TemporalEvolution(item -> { })),
-                new InventoryItem(SULFURAS, -1, 80, new TemporalEvolution(item -> { })),
-                new InventoryItem(BACKSTAGE_PASS, 15, 20),
-                new InventoryItem(BACKSTAGE_PASS, 10, 49, new TemporalEvolution(item -> { })),
-                new InventoryItem(BACKSTAGE_PASS, 5, 49, new TemporalEvolution(item -> { })),
-                // this conjured item does not work properly yet
-                new InventoryItem(CONJURED_MANA_CAKE, 3, 6, new TemporalEvolution(item -> decreaseQuality(item, 2)))
-        };
+            new InventoryItem(DEXTERITY_VEST, 10, 20, new TemporalEvolution(item -> decreaseQuality(item, 1))),
+            new InventoryItem(AGED_BRIE, 2, 0),
+            new InventoryItem(ELIXIR_OF_THE_MONGOOSE, 5, 7, new TemporalEvolution(item -> decreaseQuality(item, 1))),
+            new InventoryItem(SULFURAS, 0, 80),
+            new InventoryItem(SULFURAS, -1, 80),
+            new InventoryItem(BACKSTAGE_PASS, 15, 20),
+            new InventoryItem(BACKSTAGE_PASS, 10, 49),
+            new InventoryItem(BACKSTAGE_PASS, 5, 49),
+            // this conjured item does not work properly yet
+            new InventoryItem(CONJURED_MANA_CAKE, 3, 6, new TemporalEvolution(item -> decreaseQuality(item, 2)))
+    };
 
         Item[] items = itemsFrom(inventoryItems);
 
