@@ -1,20 +1,26 @@
 package com.gildedrose;
 
+import static com.gildedrose.ItemCatalog.*;
+import static com.gildedrose.TemporalEvolution.decreaseQuality;
+
 public class TexttestFixture {
     public static void main(String[] args) {
         System.out.println("OMGHAI!");
 
-        Item[] items = new Item[] {
-                new Item("+5 Dexterity Vest", 10, 20), //
-                new Item("Aged Brie", 2, 0), //
-                new Item("Elixir of the Mongoose", 5, 7), //
-                new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
-                new Item("Sulfuras, Hand of Ragnaros", -1, 80),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
-                // this conjured item does not work properly yet
-                new Item("Conjured Mana Cake", 3, 6) };
+        InventoryItem[] inventoryItems = new InventoryItem[] {
+            new InventoryItem(DEXTERITY_VEST, 10, 20, new TemporalEvolution(item -> decreaseQuality(item, 1))),
+            new InventoryItem(AGED_BRIE, 2, 0),
+            new InventoryItem(ELIXIR_OF_THE_MONGOOSE, 5, 7, new TemporalEvolution(item -> decreaseQuality(item, 1))),
+            new InventoryItem(SULFURAS, 0, 80),
+            new InventoryItem(SULFURAS, -1, 80),
+            new InventoryItem(BACKSTAGE_PASS, 15, 20),
+            new InventoryItem(BACKSTAGE_PASS, 10, 49),
+            new InventoryItem(BACKSTAGE_PASS, 5, 49),
+            // this conjured item does not work properly yet
+            new InventoryItem(CONJURED_MANA_CAKE, 3, 6, new TemporalEvolution(item -> decreaseQuality(item, 2)))
+    };
+
+        Item[] items = itemsFrom(inventoryItems);
 
         GildedRose app = new GildedRose(items);
 
@@ -34,4 +40,13 @@ public class TexttestFixture {
         }
     }
 
+    private static Item[] itemsFrom(InventoryItem[] inventoryItems) {
+        Item[] items = new Item[inventoryItems.length];
+
+        for (int i = 0; i < inventoryItems.length; i++) {
+            items[i] = inventoryItems[i].item;
+        }
+
+        return items;
+    }
 }
