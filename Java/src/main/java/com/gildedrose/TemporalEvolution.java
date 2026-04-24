@@ -1,16 +1,16 @@
 package com.gildedrose;
 
-// Base class for item updates driven by time.
+// Wraps item updates driven by time.
 // It will host shared operations used by temporal item evolutions.
 class TemporalEvolution implements ItemUpdate {
     private final ItemUpdate update;
 
+    // Accepts the concrete evolution as a function to avoid anonymous subclasses.
     TemporalEvolution(ItemUpdate update) {
         this.update = update;
     }
 
-	// Accepts the concrete evolution as a function to avoid anonymous subclasses.
-    @Override
+	@Override
     public void update(Item item) {
         update.update(item);
     }
