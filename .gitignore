@@ -11,3 +11,4 @@ venv
 **/.DS_Store/*
 .metals/
 .vscode/
+texttests/ThirtyDays/stdout.actual.gr
